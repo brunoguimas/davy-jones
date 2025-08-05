@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Davy Jones - GameplayRJ | O Pirata dos Games Supremo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-navy: #1e293b;
+            --secondary-slate: #334155;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-teal: #14b8a6;
+            --gold-accent: #f59e0b;
+            --background-dark: #0f172a;
+            --background-darker: #020617;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-accent: #e2e8f0;
+            --border-color: rgba(148, 163, 184, 0.1);
+            --gradient-primary: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            --gradient-secondary: linear-gradient(135deg, var(--primary-navy), var(--secondary-slate));
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-large: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--background-dark), var(--background-darker));
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Enhanced Header - Mobile First */
+        header {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(20px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: var(--shadow-medium);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: none;
+            list-style: none;
+            gap: 0.5rem;
+            width: 100%;
+            flex-direction: column;
+            margin-top: 1rem;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            text-align: center;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .menu-toggle {
+            display: block;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* Hero Section - Mobile First */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, var(--background-dark), var(--background-darker));
+            padding: 6rem 1rem 4rem;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 90%;
+            width: 100%;
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 10vw, 6rem);
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 5vw, 2.5rem);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--gold-accent);
+        }
+
+        .hero-tagline {
+            font-size: clamp(0.9rem, 3vw, 1.4rem);
+            margin-bottom: 2.5rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 100%;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 1rem;
+            font-weight: 600;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-large);
+        }
+
+        /* Sections - Responsive */
+        .section {
+            padding: clamp(4rem, 10vw, 7.5rem) 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 8vw, 4rem);
+            text-align: center;
+            margin-bottom: clamp(3rem, 8vw, 5rem);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5rem;
+            height: 0.25rem;
+            background: var(--gradient-primary);
+            border-radius: 0.125rem;
+        }
+
+        /* About Section - Responsive */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+            text-align: center;
+        }
+
+        .profile-image {
+            width: min(300px, 90vw);
+            height: min(300px, 90vw);
+            border-radius: 1.5rem;
+            background: var(--gradient-primary);
+            padding: 0.375rem;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: var(--shadow-large);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 1.125rem;
+            object-fit: cover;
+            display: block;
+        }
+
+        .about-text {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            line-height: 1.8;
+            color: var(--text-accent);
+        }
+
+        .about-text strong {
+            color: var(--gold-accent);
+            font-weight: 600;
+        }
+
+        /* Stats - Responsive Grid */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            padding: 2rem 1.5rem;
+            border-radius: 1.25rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: var(--shadow-large);
+            border-color: var(--accent-blue);
+        }
+
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .stat-label {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Video Section - Responsive */
+        .video-section {
+            background: rgba(30, 41, 59, 0.3);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .video-container {
+            max-width: min(800px, 90vw);
+            margin: 0 auto 3rem auto;
+            position: relative;
+            aspect-ratio: 16/9;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-large);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-description {
+            text-align: center;
+            max-width: min(600px, 90%);
+            margin: 0 auto;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Flow Games Section - Responsive */
+        .flow-games-section {
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        .podcast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: 2rem;
+        }
+
+        .podcast-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 1.25rem;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .podcast-card:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: var(--shadow-large);
+            border-color: var(--accent-cyan);
+        }
+
+        .podcast-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Mago Section - Responsive */
+        .mago-section {
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(20, 184, 166, 0.1) 0%, transparent 50%),
+                rgba(30, 41, 59, 0.2);
+        }
+
+        .mago-content {
+            text-align: center;
+            max-width: min(800px, 90%);
+            margin: 0 auto;
+        }
+
+        .mago-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            background: linear-gradient(135deg, var(--accent-teal), var(--gold-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .mago-description {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            line-height: 1.8;
+            color: var(--text-accent);
+            margin-bottom: 2.5rem;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .achievement-badge {
+            background: rgba(30, 41, 59, 0.6);
+            border: 2px solid var(--accent-teal);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-badge:hover {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--gold-accent);
+        }
+
+        .badge-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .badge-title {
+            font-weight: 600;
+            color: var(--gold-accent);
+            margin-bottom: 0.5rem;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+
+        /* GTA 6 Section - Responsive */
+        .gta6-section {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .gta6-content {
+            text-align: center;
+        }
+
+        .gta6-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-cyan), var(--gold-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+        }
+
+        /* Kitchen Section - Responsive */
+        .kitchen-section {
+            background: 
+                linear-gradient(rgba(30, 41, 59, 0.5), rgba(30, 41, 59, 0.5)),
+                url('ilikethis.jpg') center/cover;
+            position: relative;
+        }
+
+        .kitchen-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(51, 65, 85, 0.8));
+        }
+
+        .kitchen-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .kitchen-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: 2rem;
+        }
+
+        .recipe-card {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 1.25rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: var(--shadow-large);
+        }
+
+        .recipe-header {
+            background: var(--gradient-primary);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .recipe-title {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            font-weight: 600;
+            color: white;
+        }
+
+        .recipe-content {
+            padding: 2rem;
+        }
+
+        /* Videos Section - Responsive */
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+            gap: 2rem;
+        }
+
+        .video-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 1.25rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .video-card:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: var(--shadow-large);
+            border-color: var(--accent-blue);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: var(--gradient-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-title {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            margin-bottom: 0.75rem;
+            color: var(--gold-accent);
+            font-weight: 600;
+        }
+
+        .video-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+
+        /* Social Media - Responsive */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            width: clamp(60px, 15vw, 80px);
+            height: clamp(60px, 15vw, 80px);
+            border-radius: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid var(--border-color);
+            position: relative;
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+        }
+
+        .social-link:hover {
+            transform: translateY(-0.5rem) scale(1.1);
+            box-shadow: var(--shadow-large);
+        }
+
+        .social-link.youtube { 
+            background: linear-gradient(135deg, #ff0000, #cc0000); 
+            border-color: #ff0000;
+        }
+        .social-link.instagram { 
+            background: linear-gradient(135deg, #e4405f, #f77737, #fcaf45); 
+            border-color: #e4405f;
+        }
+        .social-link.twitter { 
+            background: linear-gradient(135deg, #1da1f2, #0d8bd9); 
+            border-color: #1da1f2;
+        }
+        .social-link.tiktok { 
+            background: linear-gradient(135deg, #ff0050, #000000); 
+            border-color: #ff0050;
+        }
+
+        /* Footer - Responsive */
+        footer {
+            background: var(--background-darker);
+            padding: 5rem 0 2.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .footer-content {
+            max-width: min(600px, 90%);
+            margin: 0 auto;
+        }
+
+        .footer-motto {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 700;
+            color: var(--gold-accent);
+            margin-bottom: 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Responsive Design - Tablet and Desktop */
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 2rem;
+            }
+
+            .nav-links {
+                display: flex;
+                flex-direction: row;
+                width: auto;
+                margin-top: 0;
+            }
+
+            .menu-toggle {
+                display: none;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr 2fr;
+                gap: 5rem;
+                text-align: left;
+            }
+
+            .stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .hero {
+                padding: 6rem 2rem 4rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .section {
+                padding: 7.5rem 0;
+            }
+
+            .stats {
+                margin-top: 5rem;
+            }
+
+            .achievements-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: particles 20s linear infinite;
+        }
+
+        .particle.blue { 
+            background: radial-gradient(circle, var(--accent-blue), transparent); 
+        }
+        .particle.cyan { 
+            background: radial-gradient(circle, var(--accent-cyan), transparent); 
+        }
+        .particle.teal { 
+            background: radial-gradient(circle, var(--accent-teal), transparent); 
+        }
+
+        @keyframes particles {
+            0% { 
+                transform: translateY(100vh) rotate(0deg); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 1; 
+            }
+            90% { 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translateY(-100vh) rotate(720deg); 
+                opacity: 0; 
+            }
+        }
+
+        /* Emoji Static Styles - Remove all effects */
+        .emoji {
+            display: inline;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", sans-serif;
+        }
+
+        /* Force emojis to be static - no animations, filters, or effects */
+        *:contains("🏴‍☠️"), *:contains("🎮"), *:contains("📺"), *:contains("📸"), 
+        *:contains("🐦"), *:contains("🎵"), *:contains("🧙‍♂️"), *:contains("🏆"), 
+        *:contains("🎯"), *:contains("⚡"), *:contains("🧠"), *:contains("🔥"), 
+        *:contains("👑"), *:contains("🎙️"), *:contains("💰"), *:contains("🌎"),
+        *:contains("🍕"), *:contains("🥤"), *:contains("🍖"), *:contains("🍰"),
+        *:contains("📧"), *:contains("💸"), *:contains("❤️") {
+            filter: none !important;
+            opacity: 1 !important;
+            animation: none !important;
+            transition: none !important;
+            transform: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">🏴‍☠️ DAVY JONES</div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#video">Conteúdo</a></li>
+                <li><a href="#mago">O Mago</a></li>
+                <li><a href="#flow-games">Flow Games</a></li>
+                <li><a href="#gta6">GTA 6</a></li>
+                <li><a href="#kitchen">Cozinha</a></li>
+                <li><a href="#videos">Vídeos</a></li>
+                <li><a href="#social">Redes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="particles"></div>
+        <div class="hero-content">
+            <h1 class="hero-title floating">DAVY JONES</h1>
+            <p class="hero-subtitle">🏴‍☠️ O Pirata dos Games Supremo</p>
+            <p class="hero-tagline">Dono do Flow Games • O Brabo • O Incrível • O Mago dos Controles</p>
+            <a href="#about" class="cta-button">Conheça o Lendário Pirata</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Sobre o Davy Jones</h2>
+            <div class="about-content fade-in-up">
+                <div class="profile-image">
+                    <img src="ilovethis.jpeg" alt="Davy Jones - O Pirata dos Games">
+                </div>
+                <div class="about-text">
+                    <p><strong>Gustavo Sanches Matsufugi</strong>, mais conhecido como <strong>Davy Jones</strong>, nasceu no Rio de Janeiro em 29 de janeiro de 1988. Este lendário administrador de empresas transformou sua paixão ardente por games numa carreira épica que domina o YouTube brasileiro.</p>
+                    
+                    <p>Em 2010, Davy tomou a decisão mais corajosa de sua vida: deixar o emprego formal para se dedicar exclusivamente aos jogos. Começando com o canal "Estúdio Pirata", depois evoluindo para o "GameplayRJ", conquistou milhões de fãs com sua energia explosiva e conhecimento profundo sobre a indústria gaming.</p>
+                    
+                    <p><strong>Conhecido mundialmente pelo bordão "PIRATAS YEAH!"</strong>, Davy se tornou a autoridade definitiva em gaming no Brasil, chegando a fazer sete vídeos diários em seu auge. Hoje, ele comanda o <strong>Flow Games</strong>, o podcast de games mais épico do universo.</p>
+                </div>
+            </div>
+
+            <div class="stats fade-in-up">
+                <div class="stat-card">
+                    <div class="stat-number">1.2M+</div>
+                    <p class="stat-label">Seguidores Instagram</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">850K+</div>
+                    <p class="stat-label">Seguidores Twitter</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$55M+</div>
+                    <p class="stat-label">Patrimônio Estimado</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <p class="stat-label">Anos de Supremacia Racial</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="video" class="section video-section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Conteúdo Exclusivo do Privacy</h2>
+            <div class="video-container fade-in-up">
+                <iframe src="https://www.youtube.com/embed/__UIwJS_r3w?si=QAxQoaw3jhAzxf5_" 
+                        title="Davy Jones - Conteúdo Épico" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <div class="video-description fade-in-up">
+                <p>Assista aos melhores momentos do Davy Jones e entenda por que ele é considerado o maior influenciador gaming do Brasil. Análises profundas, humor inteligente e a paixão pelos games que conquistou milhões de fãs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- O Mago Section -->
+    <section id="mago" class="section mago-section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">O Mago Supremo</h2>
+            <div class="mago-content fade-in-up">
+                <h3 class="mago-title">O BRABO • O INCRÍVEL • O MAGO</h3>
+                <p class="mago-description">
+                    Davy Jones não é apenas um YouTuber - ele é <strong>O MAGO dos controles</strong>, <strong>O BRABO</strong> das análises, <strong>O INCRÍVEL</strong> dos comentários gaming. Com poderes místicos para detectar qualquer mentira da indústria de games, ele empunha o controle como uma varinha mágica, transformando cada gameplay em pura magia digital.
+                </p>
+                <p class="mago-description">
+                    Suas previsões sobre lançamentos são lendárias, sua capacidade de ler entre as linhas do marketing corporativo é sobrenatural, e seu conhecimento gaming transcende dimensões. Quando Davy fala, a indústria inteira para para escutar - porque <strong>O MAGO</strong> nunca erra.
+                </p>
+                
+                <div class="achievements-grid fade-in-up">
+                    <div class="achievement-badge">
+                        <div class="badge-icon">🏆</div>
+                        <div class="badge-title">MESTRE SUPREMO</div>
+                        <p>Gaming Authority #1 Brasil</p>
+                    </div>
+                    <div class="achievement-badge">
+                        <div class="badge-icon">🎯</div>
+                        <div class="badge-title">ORÁCULO GAMING</div>
+                        <p>99% Precisão Previsões</p>
+                    </div>
+                    <div class="achievement-badge">
+                        <div class="badge-icon">⚡</div>
+                        <div class="badge-title">ENERGIA INFINITA</div>
+                        <p>7 Vídeos/Dia Recorde</p>
+                    </div>
+                    <div class="achievement-badge">
+                        <div class="badge-icon">🧠</div>
+                        <div class="badge-title">KNOWLEDGE GOD</div>
+                        <p>Enciclopédia Gaming Viva</p>
+                    </div>
+                    <div class="achievement-badge">
+                        <div class="badge-icon">🔥</div>
+                        <div class="badge-title">FLOW MASTER</div>
+                        <p>Podcast #1 Mundial</p>
+                    </div>
+                    <div class="achievement-badge">
+                        <div class="badge-icon">👑</div>
+                        <div class="badge-title">REI DA PUTARIA</div>
+                        <p>Comandante dos Mares Gaming</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flow Games Section -->
+    <section id="flow-games" class="section flow-games-section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Flow Games - O Melhor Podcast do Mundo</h2>
+            <div class="fade-in-up" style="text-align: center; margin-bottom: 60px;">
+                <h3 style="font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--gold-accent); margin-bottom: 20px;">🎙️ POSIÇÃO #1 MUNDIAL 🎙️</h3>
+                <p style="font-size: clamp(1rem, 3vw, 1.3rem); color: var(--text-secondary); max-width: min(800px, 90%); margin: 0 auto;">
+                    O Flow Games não é apenas um podcast - é <strong>A EXPERIÊNCIA GAMING DEFINITIVA</strong>. Em 1º lugar mundial, superando gigantes internacionais, Davy Jones provou que o Brasil domina quando o assunto é conteúdo gaming de qualidade suprema.
+                </p>
+            </div>
+
+            <div class="podcast-grid fade-in-up">
+                <div class="podcast-card">
+                    <div class="podcast-icon">🎮</div>
+                    <h3 style="color: var(--gold-accent); font-size: clamp(1.2rem, 3vw, 1.4rem); margin-bottom: 16px;">ANÁLISES ÉPICAS</h3>
+                    <p>Reviews completos e sem firula dos maiores lançamentos. Davy disseca cada game com precisão cirúrgica e honestidade brutal.</p>
+                </div>
+                <div class="podcast-card">
+                    <div class="podcast-icon">🔥</div>
+                    <h3 style="color: var(--gold-accent); font-size: clamp(1.2rem, 3vw, 1.4rem); margin-bottom: 16px;">DEBATES INTENSOS</h3>
+                    <p>Discussões acaloradas sobre polêmicas da indústria, com convidados especiais e opiniões que balançam o mundo gaming.</p>
+                </div>
+                <div class="podcast-card">
+                    <div class="podcast-icon">💰</div>
+                    <h3 style="color: var(--gold-accent); font-size: clamp(1.2rem, 3vw, 1.4rem); margin-bottom: 16px;">BUSINESS GAMING</h3>
+                    <p>Análises financeiras da indústria, movimentações corporativas e o que realmente rola nos bastidores do gaming mundial.</p>
+                </div>
+                <div class="podcast-card">
+                    <div class="podcast-icon">🎯</div>
+                    <h3 style="color: var(--gold-accent); font-size: clamp(1.2rem, 3vw, 1.4rem); margin-bottom: 16px;">PREVISÕES CERTEIRAS</h3>
+                    <p>O Mago dos Games faz previsões que sempre se tornam realidade. Suas análises de tendências são referência mundial.</p>
+                </div>
+                <div class="podcast-card">
+                    <div class="podcast-icon">🏆</div>
+                    <h3 style="color: var(--gold-accent); font-size: clamp(1.2rem, 3vw, 1.4rem); margin-bottom: 16px;">AWARDS & RANKINGS</h3>
+                    <p>Game of the Year, rankings definitivos e premiações que definem os rumos da indústria gaming global.</p>
+                </div>
+                <div class="podcast-card">
+                    <div class="podcast-icon">🌎</div>
+                    <h3 style="color: var(--gold-accent); font-size: clamp(1.2rem, 3vw, 1.4rem); margin-bottom: 16px;">IMPACTO UNIVERSAL</h3>
+                    <p>Posição #1 mundial em podcasts - uma conquista histórica que coloca o Brasil no topo do gaming content.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GTA 6 Section -->
+<section id="gta6" class="section gta6-section">
+    <div class="container">
+        <div class="gta6-content fade-in-up">
+            <h2 class="gta6-logo">GTA VI</h2>
+            <h3 style="font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--gold-accent); margin-bottom: 30px;">O JOGO QUE VAI MUDAR TUDO</h3>
+            <p style="font-size: clamp(1rem, 3vw, 1.3rem); line-height: 1.8; max-width: min(900px, 90%); margin: 0 auto 40px; color: var(--text-accent);">
+                <strong>Davy Jones</strong> foi um dos primeiros a prever o impacto revolucionário que GTA 6 terá na indústria. Com suas análises profundas sobre desenvolvimento, marketing e expectativas, ele se tornou <strong>A REFERÊNCIA</strong> quando o assunto é o jogo mais aguardado da década.
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 30px; margin-top: 50px;">
+                <div class="podcast-card">
+                    <div class="podcast-icon">🎯</div>
+                    <h4 style="color: var(--accent-cyan); margin-bottom: 15px; font-size: clamp(1.1rem, 3vw, 1.2rem);">PREVISÕES LEGENDÁRIAS</h4>
+                    <p>Davy antecipou detalhes de GTA 6 com precisão assustadora, provando seu status de oráculo gaming.</p>
+                </div>
+                <div class="podcast-card">
+                    <div class="podcast-icon">💡</div>
+                    <h4 style="color: var(--accent-cyan); margin-bottom: 15px; font-size: clamp(1.1rem, 3vw, 1.2rem);">ANÁLISES TÉCNICAS</h4>
+                    <p>Breakdown completo de engine, gráficos e mecânicas que revolucionarão o open-world gaming.</p>
+                </div>
+                <div class="podcast-card">
+                    <div class="podcast-icon">🌍</div>
+                    <h4 style="color: var(--accent-cyan); margin-bottom: 15px; font-size: clamp(1.1rem, 3vw, 1.2rem);">IMPACTO CULTURAL</h4>
+                    <p>Como GTA 6 redefinirá não apenas games, mas toda a cultura pop e entretenimento mundial.</p>
+                </div>
+            </div>
+
+            <!-- Adição do vídeo embed sobre GTA VI -->
+            <div class="video-container fade-in-up" style="margin-top: 60px;">
+                <iframe src="https://www.youtube.com/embed/vOEXu1TonUs?si=4Oq8zBiPpNST-rl6"  
+                        title="Davy Jones analisa GTA VI" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <div class="video-description fade-in-up" style="margin-top: 20px;">
+                <p>Assista à análise exclusiva do Davy Jones sobre os trailers e vazamentos de GTA VI - com insights que você não encontra em nenhum outro lugar!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Kitchen Section -->
+    <section id="kitchen" class="section kitchen-section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Dava na Cozinha</h2>
+            <div class="fade-in-up" style="text-align: center; margin-bottom: 60px;">
+                <p style="font-size: clamp(1rem, 3vw, 1.3rem); color: var(--text-accent); max-width: min(800px, 90%); margin: 0 auto;">
+                    Quando não está dominando o mundo gaming, <strong>Davy Jones</strong> mostra que é <strong>THE MASTER</strong> também na cozinha! Suas aventuras culinárias são tão épicas quanto suas gameplays - sempre com aquela energia contagiante que só o pirata tem.
+                </p>
+            </div>
+
+            <div class="kitchen-grid fade-in-up">
+                <div class="recipe-card">
+                    <div class="recipe-header">
+                        <h3 class="recipe-title">🍕 PIZZA GAMER SUPREMA</h3>
+                    </div>
+                    <div class="recipe-content">
+                        <p><strong>A Pizza Oficial dos Piratas!</strong> Receita secreta desenvolvida durante longas sessões de gaming. Ingredientes selecionados para máxima energia e sabor explosivo.</p>
+                        <ul style="margin-top: 15px; color: var(--accent-cyan);">
+                            <li>• Massa artesanal com temperos especiais</li>
+                            <li>• Molho secreto com 7 especiarias</li>
+                            <li>• Queijos premium importados</li>
+                            <li>• Ingredientes que dão +100 energia gaming</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="recipe-card">
+                    <div class="recipe-header">
+                        <h3 class="recipe-title">🥤 ENERGY DRINK PIRATA</h3>
+                    </div>
+                    <div class="recipe-content">
+                        <p><strong>A Bebida dos Campeões!</strong> Fórmula exclusiva para sessões gaming marathon. Energia sustentada sem crash, sabor incrível e boost mental garantido.</p>
+                        <ul style="margin-top: 15px; color: var(--accent-cyan);">
+                            <li>• Frutas cítricas frescas</li>
+                            <li>• Extratos naturais energéticos</li>
+                            <li>• Zero açúcar, máximo sabor</li>
+                            <li>• Fórmula científica gaming approved</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="recipe-card">
+                    <div class="recipe-header">
+                        <h3 class="recipe-title">🍖 CHURRASCO ÉPICO</h3>
+                    </div>
+                    <div class="recipe-content">
+                        <p><strong>O Churrasco que Conquistou o YouTube!</strong> Técnicas secretas de preparo, temperos exclusivos e cortes premium. Perfeito para celebrar vitórias épicas nos games.</p>
+                        <ul style="margin-top: 15px; color: var(--accent-cyan);">
+                            <li>• Carnes selecionadas premium</li>
+                            <li>• Marinadas com receitas familiares</li>
+                            <li>• Técnicas de grilling profissionais</li>
+                            <li>• Acompanhamentos gourmet</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="recipe-card">
+                    <div class="recipe-header">
+                        <h3 class="recipe-title">🍰 SOBREMESA GAMING</h3>
+                    </div>
+                    <div class="recipe-content">
+                        <p><strong>O Final Perfeito!</strong> Sobremesas que são verdadeiras obras de arte comestível. Doces que dão aquele boost de felicidade para encerrar o dia com chave de ouro.</p>
+                        <ul style="margin-top: 15px; color: var(--accent-cyan);">
+                            <li>• Ingredientes premium importados</li>
+                            <li>• Apresentação de nível gourmet</li>
+                            <li>• Sabores que explodem na boca</li>
+                            <li>• Instagram-worthy guaranteed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px;" class="fade-in-up">
+                <p style="font-size: clamp(1.1rem, 3vw, 1.3rem); color: var(--gold-accent); font-weight: 600;">
+                    🔥 "Cozinhar é como foder - precisa de skill, timing perfeito e muita paixão!" - Davy Jones 🔥
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Videos Section -->
+    <section id="videos" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Conteúdo Legendário</h2>
+            <div class="videos-grid fade-in-up">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="analise.jpg" alt="Review Épica">
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">REVIEWS ÉPICAS</h3>
+                        <p class="video-description">Análises completas e sem firula dos lançamentos mais esperados. Davy disseca cada game com precisão cirúrgica, honestidade brutal e aquela energia que só ele tem.</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Breaking News Gaming">
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">BREAKING NEWS GAMING</h3>
+                        <p class="video-description">Primeiro a saber, primeiro a comentar. Notícias quentes da indústria com a análise mais afiada do Brasil.</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="astrobot.jpg" alt="Game of the Year">
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">GAME OF THE YEAR</h3>
+                        <p class="video-description">Os rankings definitivos que definem o ano gaming. Análises profundas, critérios rigorosos e decisões que influenciam toda a indústria.</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Memes & Entertainment">
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">MEMES & ENTERTAINMENT</h3>
+                        <p class="video-description">O lado hilário do gaming com o humor mais afiado da internet. Memes virais, momentos épicos e entretenimento puro.</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Gameplays Exclusivas">
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">GAMEPLAYS EXCLUSIVAS</h3>
+                        <p class="video-description">Os primeiros gameplays dos títulos mais aguardados, com comentários hilários e reações autênticas.</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="dick.jpg" alt="Flow Games Podcast">
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">FLOW GAMES PODCAST</h3>
+                        <p class="video-description">O podcast #1 mundial sobre games (Monark se fudeu)! Conversas profundas, debates intensos e convidados especiais.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Social Media Section -->
+    <section id="social" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Siga o Pirata Supremo</h2>
+            <div class="fade-in-up" style="text-align: center; margin-bottom: 40px;">
+                <p style="font-size: clamp(1rem, 3vw, 1.3rem); color: var(--text-secondary);">
+                    Entre para a tripulação de milhões de piratas que navegam pelos mares gaming!
+                </p>
+            </div>
+            <div class="social-links fade-in-up">
+                <a href="https://www.youtube.com/user/Gameplayrj" class="social-link youtube" target="_blank">📺</a>
+                <a href="https://www.instagram.com/odavyjones/" class="social-link instagram" target="_blank">📸</a>
+                <a href="https://twitter.com/davyjonesrj" class="social-link twitter" target="_blank">🐦</a>
+                <a href="https://www.tiktok.com/@odavyjones" class="social-link tiktok" target="_blank">🎵</a>
+            </div>
+            <div style="text-align: center; margin-top: 50px;" class="fade-in-up">
+                <p style="font-size: clamp(1rem, 3vw, 1.2rem); color: var(--gold-accent); font-weight: 600;">
+                    📧 Contato profissional: <strong>contato@gameplayrj.com.br</strong><br>
+                    💸 Pix: <strong>brunoguimaraes.guigui@gmail.com</strong>
+                </p>
+                <p style="font-size: clamp(1.1rem, 3vw, 1.4rem); color: var(--accent-cyan); margin-top: 20px; font-weight: 600;">
+                    🏴‍☠️ Flow Games - O melhor podcast de games do mundo 🏴‍☠️
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-motto">PIRATAS YEAH! 🏴‍☠️</div>
+                <p style="font-size: clamp(0.9rem, 2.5vw, 1.1rem); margin-bottom: 20px; color: var(--text-secondary);">Site oficial do Davy Jones - GameplayRJ</p>
+                <p style="margin-bottom: 20px; color: var(--text-secondary); font-size: clamp(0.9rem, 2.5vw, 1rem);">Feito com ❤️ e muito gaming pelos fãs piratas!</p>
+                <p style="color: var(--accent-cyan); font-weight: 600; font-size: clamp(0.9rem, 2.5vw, 1rem);">
+                    O Mago • O Brabo • O Incrível • O Pirata dos Games Supremo
+                </p>
+                <p style="margin-top: 30px; opacity: 0.7; color: var(--text-secondary); font-size: clamp(0.8rem, 2vw, 0.9rem);">
+                    &copy; 2024 - Navegando pelos mares gaming desde 2010
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu toggle function
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close menu when clicking on a link (mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.getElementById('navLinks');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Enhanced smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Enhanced particle system
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const types = ['blue', 'cyan', 'teal'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            particle.classList.add(type);
+            
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.width = particle.style.height = (Math.random() * 6 + 2) + 'px';
+            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            
+            const particlesContainer = document.querySelector('.particles');
+            if (particlesContainer) {
+                particlesContainer.appendChild(particle);
+            }
+            
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.remove();
+                }
+            }, 25000);
+        }
+
+        // Generate particles
+        setInterval(createParticle, 300);
+
+        // Enhanced header effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const scrolled = window.scrollY;
+            
+            if (scrolled > 100) {
+                header.style.background = 'rgba(30, 41, 59, 0.98)';
+                header.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+            } else {
+                header.style.background = 'rgba(30, 41, 59, 0.95)';
+                header.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+            }
+        });
+
+        // Enhanced scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Enhanced interactive effects
+        document.querySelectorAll('.video-card, .podcast-card, .recipe-card, .stat-card').forEach(card => {
+            card.addEventListener('mouseenter', (e) => {
+                if (e.target.classList.contains('stat-card')) {
+                    e.target.style.transform = 'translateY(-8px)';
+                } else {
+                    e.target.style.transform = 'translateY(-8px)';
+                }
+            });
+            
+            card.addEventListener('mouseleave', (e) => {
+                e.target.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Enhanced achievement badges animation
+        document.querySelectorAll('.achievement-badge').forEach((badge, index) => {
+            badge.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        // Social links click effect
+        document.querySelectorAll('.social-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                link.style.transform = 'translateY(-8px) scale(1.2)';
+                setTimeout(() => {
+                    link.style.transform = 'translateY(-8px) scale(1.1)';
+                }, 150);
+            });
+        });
+
+        // Close menu when clicking outside (mobile)
+        document.addEventListener('click', (e) => {
+            const nav = document.querySelector('nav');
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Resize handler for responsive behavior
+        window.addEventListener('resize', () => {
+            const navLinks = document.getElementById('navLinks');
+            if (window.innerWidth >= 768) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
